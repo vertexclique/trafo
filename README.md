@@ -16,8 +16,7 @@
 * chkdupexe	
 * chrt	
 * chsh	
-* clock	
-* col (legacy)[4]
+* clock
 * colcrt
 * colrm
 * column
