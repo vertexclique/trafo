@@ -2,7 +2,7 @@
 
 ![Shiny Cat!](http://sosyalport.com/wp-content/uploads/kedi4.jpg)
 
-## Cross-platform Rust rewrite of the util-linux
+## Rust rewrite of the util-linux
 
 ### TODO:
 
