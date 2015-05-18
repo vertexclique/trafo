@@ -4,10 +4,6 @@
 
 ## Rust rewrite of the util-linux
 
-**X** : In progress
-**N** : Need contribution
-**C** : Completed
-
 ### TODO:
 
 * addpart
@@ -99,15 +95,13 @@
 * uuidgen
 * vigr
 * vipw
-* whereis **X**
+* whereis
 * wipefs
 * write
 
 ### Contributions
 
 Contributions are very welcome, and should target Rust's master branch.
-
-* Nightly build for now.
 
 ### License
 
