@@ -7,10 +7,12 @@
  * that was distributed with this source code.
  */
 
-pub static DEFAULT_SIGNAL:uint = 15;
+#![allow(dead_code)]
+
+pub static DEFAULT_SIGNAL:usize= 15;
 
 
-pub struct Signal<'a> { pub name:&'a str, pub value: uint}
+pub struct Signal<'a> { pub name:&'a str, pub value: usize}
 
 /*
 
@@ -21,12 +23,12 @@ Linux Programmer's Manual
 15 TERM    16 STKFLT  17 CHLD    18 CONT    19 STOP    20 TSTP    21 TTIN
 22 TTOU    23 URG     24 XCPU    25 XFSZ    26 VTALRM  27 PROF    28 WINCH
 29 POLL    30 PWR     31 SYS
- 
+
 
 */
 
 #[cfg(target_os = "linux")]
-pub static ALL_SIGNALS:[Signal<'static>, ..31] = [
+pub static ALL_SIGNALS:[Signal<'static>; 31] = [
     Signal{ name: "HUP",    value:1  },
     Signal{ name: "INT",    value:2  },
     Signal{ name: "QUIT",   value:3  },
@@ -102,8 +104,8 @@ No    Name         Default Action       Description
 
 */
 
-#[cfg(target_os = "macos")]
-pub static ALL_SIGNALS:[Signal<'static>, ..31] = [
+#[cfg(any(target_os = "macos", target_os = "freebsd"))]
+pub static ALL_SIGNALS:[Signal<'static>; 31] = [
     Signal{ name: "HUP",    value:1  },
     Signal{ name: "INT",    value:2  },
     Signal{ name: "QUIT",   value:3  },
@@ -136,3 +138,21 @@ pub static ALL_SIGNALS:[Signal<'static>, ..31] = [
     Signal{ name: "USR1",   value:30 },
     Signal{ name: "USR2",   value:31 },
 ];
+
+pub fn signal_by_name_or_value(signal_name_or_value: &str) -> Option<usize> {
+    if signal_name_or_value == "0" {
+        return Some(0);
+    }
+    for signal in ALL_SIGNALS.iter() {
+        let long_name = format!("SIG{}", signal.name);
+        if signal.name == signal_name_or_value  || (signal_name_or_value == signal.value.as_slice()) || (long_name.as_slice() == signal_name_or_value) {
+            return Some(signal.value);
+        }
+    }
+    None
+}
+
+#[inline(always)]
+pub fn is_signal(num: usize) -> bool {
+    num < ALL_SIGNALS.len()
+}
