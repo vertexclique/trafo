@@ -2,6 +2,8 @@
 name = "trafo"
 version = "0.1.0"
 authors = ["Mahmut Bulut <mahmut@mahmutbulut.com>"]
+keywords = ["util-linux", "utils", "trafo", "os"]
+license = "MIT"
 
 [dependencies.getopts]
 getopts = "*"
